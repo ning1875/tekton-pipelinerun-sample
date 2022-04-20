@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: pipelinerun-set-image-from-github
+  labels:
+    app.kubernetes.io/description: abc
+spec:
+  pipelineRef:
+    name: set-image
+  params:
+    - name: NAMESPACE  # git 地址
+      value: default
+    - name: CONTROLLER_TYPE
+      value: deployment
+    - name: CONTROLLER_NAME
+      value: nginx-deployment
+    - name: CONTROLLER_TYPE
+      value: deployment
+    - name: CONTAINER_NAME
+      value: nginx
+    - name: IMAGE_NAME
+      #value: harbor.shopeemobile.com/offline-k8s-sre/nyy-test/tekton-sample-private:v1
+      value: harbor.shopeemobile.com/offline-k8s-sre/bigcompute/tekton-sample:v1
+  workspaces:
+    - name: kubeconfig-dir
+      configMap:
+        name: kubeconfig-kube-auto-sg-sg5-test
